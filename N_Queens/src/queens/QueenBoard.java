@@ -20,7 +20,7 @@ public class QueenBoard extends JPanel {
         int index = BOARD_SIZE - 1;
         
         while (current != null && index >= 0) {
-            queens[index][0] = current.getRow();    // row
+            queens[index][0] = current.getRow();    // rowgf
             queens[index][1] = current.getColumn(); // column
             current = current.getNeighbor();
             index--;
