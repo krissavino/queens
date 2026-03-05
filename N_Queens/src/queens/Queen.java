@@ -5,14 +5,14 @@ public class Queen {
     private final int column;
     private Queen neighbor;
     
-    // Конструктор
+    // Конструкторssss
     public Queen(int col, Queen ngh) {
         this.column = col;
         this.neighbor = ngh;
         this.row = 1;
     }
     
-    // Геттерыf
+    // Геттерыff
     public int getRow() { return row; }
     public int getColumn() { return column; }
     public Queen getNeighbor() { return neighbor; }
