@@ -5,7 +5,7 @@ public class Queen {
     private final int column;
     private Queen neighbor;
     
-    // Конструктор
+    // Конструкторre
     public Queen(int col, Queen ngh) {
         this.column = col;
         this.neighbor = ngh;
