@@ -12,7 +12,7 @@ public class Queen {
         this.row = 1;
     }
     
-    // Геттеры
+    // Геттерыf
     public int getRow() { return row; }
     public int getColumn() { return column; }
     public Queen getNeighbor() { return neighbor; }
