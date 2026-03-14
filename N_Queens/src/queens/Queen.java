@@ -8,10 +8,18 @@ public class Queen {
     private final int column;
     private Queen neighbor;
     
+    // Конструктор по умолчанию (ряд = 1)
     public Queen(int col, Queen ngh) {
         this.column = col;
         this.neighbor = ngh;
         this.row = 1;
+    }
+    
+    // Конструктор с заданным рядом (используется в агентном поиске)
+    public Queen(int col, int row, Queen ngh) {
+        this.column = col;
+        this.neighbor = ngh;
+        this.row = row;
     }
     
     public int getRow() { return row; }
@@ -51,6 +59,28 @@ public class Queen {
         return true;
     }
     
+    // Агентный метод поиска всех решений (рекурсивный перебор с проверкой через canAttack)
+    public static List<int[][]> findAllSolutionsAgentWay() {
+        return findSolutionsRecursiveAgent(0, null);
+    }
+    
+    private static List<int[][]> findSolutionsRecursiveAgent(int col, Queen leftmost) {
+        List<int[][]> solutions = new ArrayList<>();
+        if (col == 8) {
+            solutions.add(getPositionsArray(leftmost));
+            return solutions;
+        }
+        int column = col + 1; // колонки от 1 до 8
+        for (int row = 1; row <= 8; row++) {
+            Queen newQueen = new Queen(column, row, leftmost);
+            if (leftmost == null || !leftmost.canAttack(row, column)) {
+                solutions.addAll(findSolutionsRecursiveAgent(col + 1, newQueen));
+            }
+        }
+        return solutions;
+    }
+    
+    // Классический рекурсивный перебор (для сравнения)
     public static List<int[][]> findAllSolutions() {
         List<int[][]> solutions = new ArrayList<>();
         findSolutionsRecursive(0, new int[8], solutions);
@@ -67,13 +97,11 @@ public class Queen {
             solutions.add(solution);
             return;
         }
-        
         for (int row = 1; row <= 8; row++) {
             boolean valid = true;
             for (int prevCol = 0; prevCol < col; prevCol++) {
                 int prevRow = rows[prevCol];
-                if (prevRow == row || 
-                    Math.abs(prevRow - row) == Math.abs(prevCol - col)) {
+                if (prevRow == row || Math.abs(prevRow - row) == Math.abs(prevCol - col)) {
                     valid = false;
                     break;
                 }
@@ -85,11 +113,11 @@ public class Queen {
         }
     }
     
+    // Преобразует цепочку ферзей в массив позиций (индексы 0..7)
     public static int[][] getPositionsArray(Queen q) {
         int[][] queens = new int[8][2];
         Queen current = q;
         int index = 7;
-        
         while (current != null && index >= 0) {
             queens[index][0] = current.getRow();
             queens[index][1] = current.getColumn();
